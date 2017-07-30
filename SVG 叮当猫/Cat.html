@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>document</title>
+	<style type="text/css">
+	circle{
+		fill: blue;
+	}
+	ellipse{
+		fill: #fff;
+		stroke: #000;
+	}
+	#Leye,#Reye{
+    	stroke-linecap: round;
+    	stroke-width:7px;
+    	stroke: black;		
+	}
+	#nose{
+		fill: red;
+		stroke: #000;
+	}
+	#nose-1{
+		fill: #fff;
+	}
+    line {
+        stroke: #000;
+    }
+    #tie{
+    	stroke-linecap: round;
+    	stroke-width:15px;
+    	stroke: red;
+    }
+    rect{
+    	fill: blue;
+
+    }
+    #paunch{
+    	fill: #fff;
+    }
+    #ding{
+    	fill:#E3CF57;
+    }
+    #dian{
+    	fill:#000;
+    }
+    #left{
+    	stroke: blue;
+       	stroke-width:20px;
+    }
+    #right{
+    	stroke: blue;
+        stroke-width:20px;
+    }
+    #Lhand{
+    	fill: #fff;
+     	stroke: black;
+    }
+    #Rhand{
+    	fill: #fff;
+      	stroke: black;
+    }
+    path {
+	    stroke: #000;
+	    fill: transparent;
+	}
+	#hu{
+		fill: #fff;
+	}
+
+	</style>
+</head>
+<body>
+    <svg width="1000px" height="1000px" viewBox="0, 0, 1000, 1000">
+   	<circle r="100" cx="400" cy="100"></circle>
+   	<ellipse rx="80" ry="60" cx="400" cy="125"></ellipse>
+   	<ellipse rx="23" ry="28" cx="377" cy="65"></ellipse>
+   	<ellipse rx="23" ry="28" cx="423" cy="65"></ellipse>
+	<line id="Leye" x1="380" y1="70" x2="380" y2="75"></line>
+	<line id="Reye" x1="420" y1="70" x2="420" y2="75"></line>
+   	<circle id='nose' r="10" cx="400" cy="93"></circle>
+	<circle id='nose-1' r="4" cx="405" cy="90"></circle>
+    <line x1="400" y1="102" x2="400" y2="165"></line>
+    <rect x="330" y="192" width="140" height="110"></rect>
+    <circle id='paunch' r="50" cx="400" cy="220"></circle>
+    <line id="tie" x1="335" y1="185" x2="465" y2="185"></line>
+    <circle id='ding' r="12" cx="400" cy="198"></circle>
+    <circle id='dian' r="3.5" cx="400" cy="203"></circle>
+   	<ellipse rx="40" ry="11" cx="357" cy="305"></ellipse>
+   	<ellipse rx="40" ry="11" cx="443" cy="305"></ellipse>
+    <line id="left" x1="300" y1="190" x2="350" y2="210"></line>
+    <line id="right" x1="465" y1="201" x2="500" y2="215"></line>
+    <circle id='Lhand' r="20" cx="285" cy="185"></circle>
+    <circle id='Rhand' r="20" cx="508" cy="215"></circle>
+	<line id="one" x1="335" y1="100" x2="375" y2="110"></line>
+    <line id="two" x1="330" y1="120" x2="375" y2="120"></line>
+    <line id="three" x1="335" y1="140" x2="375" y2="130"></line>
+	<line id="four" x1="425" y1="110" x2="465" y2="100"></line>
+    <line id="five" x1="425" y1="120" x2="470" y2="120"></line>
+    <line id="six" x1="425" y1="130" x2="465" y2="140"></line>
+    <path d="M 350 145 A 75 75 0 0 0 450 145"></path>
+	<path d="M 375 230 A 25 28 0 0 0 425 230"></path>
+	<line x1="375" y1="230" x2="425" y2="230"></line>
+	<path id="hu" d="M 394 302 A 1 1 0 1 1 406 302"></path>
+
+</body>
+</html>

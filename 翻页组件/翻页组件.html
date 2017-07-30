@@ -1,0 +1,285 @@
+<!-- 需要里面的Tools.js文件 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+	<meta charset = 'utf-8'>
+	<script type="text/javascript" src="Tools.js"></script>
+	<style type="text/css">
+		*{
+			padding:0px;
+			margin:0px;
+			text-decoration:none;
+			list-style: none;
+		}
+		.page{
+			height:20px;
+			position: absolute;
+			top:500px;
+			left:0px;
+		}
+		a{
+			float:left;
+			height:20px;
+			margin:0 5px;
+			display:block;
+		}
+		ul{
+			width: 200px;
+			margin-top:10px;
+			margin-left:50px;
+		}
+		li{
+			height:50px;
+			background-color: #6cf;
+			width:200px;
+			margin-top:10px;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="page"></div>
+	<ul class="content"></ul>
+	<script type="text/javascript">
+		var json = {
+			"content": [
+				'content1',
+				'content2',
+				'content3',
+				'content4',
+				'content5',
+				'content6',
+				'content7',
+				'content8',
+				'content9',
+				'content10',
+				'content11',
+				'content12',
+				'content13',
+				'content14',
+				'content15',
+				'content16',
+				'content17',
+				'content18',
+				'content19',
+				'content20',
+				'content21',
+				'content22',
+				'content23',
+				'content24',
+				'content25',
+				'content26',
+				'content27',
+				'content28',
+				'content29',
+				'content30',
+				'content31',
+				'content32',
+				'content33',
+				'content34',
+				'content35',
+				'content36',
+				'content37',
+				'content38',
+				'content39',
+				'content40',
+				'content41',
+				'content42',
+				'content43',
+				'content44',
+				'content45',
+			]
+		};
+		var arr = [];//保存每一个li的原来的位置的数组
+		//json  {class:'div', nowNum:, allNum:, callBack: function}
+		//allNum + 1 ==尾页
+		//allNum + 2 ==下一页
+		//allNum + 3 ==首页
+		//0 == 上一页
+		FlipOver({"className": 'page', "nowNum" : 1, "allNum" : 15, "callBack": function(now, all){
+			//now是当前页数 all是总页数
+			var num = now * 8 < json.content.length ? 8 : json.content.length % 8;
+			var $Ul = document.getElementsByClassName('content')[0];
+			var $Oli = document.getElementsByTagName('li');
+			var iNow = 7;
+			if ($Ul.innerHTML == ''){
+				for (var i = 0; i < num; i ++){
+				var $Li = document.createElement('li');
+				$Li.innerHTML = json.content[(now - 1) * 8 + i];
+				$Ul.appendChild($Li);
+				}
+				//获取全部的li，并将他们当前的位置储存到数组中
+				for (var i = 0; i < $Oli.length; i++){
+					arr.push([$Oli[i].offsetLeft, $Oli[i].offsetTop]);
+				}
+				//给每一个li都添加absolute的位置，并且添加left和top值
+				for (var i = 0; i < $Oli.length; i++){
+					$Oli[i].style.position = 'absolute';
+					$Oli[i].style.left = arr[i][0] + 'px';
+					$Oli[i].style.top = arr[i][1] + 'px';
+					$Oli[i].style.margin = 0;
+				}
+
+			}else{
+					console.log(arr);
+				var timer = setInterval(function(){
+					startMove($Oli[iNow], {'left': 200, 'top': 400, 'opacity' : 0})
+					if (iNow == 0){
+						clearInterval(timer);
+						iNow = num - 1;
+						for (var i = 0; i < num; i++){
+							$Oli[i].innerHTML = json.content[(now - 1) * 8 + i];
+						}
+						var timer2 = setInterval(function(){
+
+							startMove($Oli[iNow], {'left': arr[iNow][0], 'top': arr[iNow][1], 'opacity': 100});
+							if (iNow == 0){
+								clearInterval(timer2);
+								iNow = num - 1;
+							}else{
+								iNow --;
+							}
+						}, 100);
+					}else{
+						iNow --;
+					}
+				}, 100);
+			}
+
+		}});
+		function FlipOver(json){
+			if (!json) return false;
+			var nowNum = json.nowNum;
+			var allNum = json.allNum;
+			var className = json.className;
+			var callBack = json.callBack;
+			var $Div = document.getElementsByClassName(className)[0];
+			Page({"className": className, "nowNum": nowNum, "allNum": allNum, "callBack" : callBack});
+			function Page(json){
+				//中间部分
+				 if (nowNum > 4 && nowNum <= allNum - 4){
+					$Div.innerHTML = '';
+					var $A = document.createElement('a');
+					$A.innerHTML = '上一页';
+					$A.href = '#' + (allNum + 3);
+					$Div.appendChild($A);
+					if (nowNum >=6){
+						$A = document.createElement('a');
+						$A.innerHTML = '首页';
+						$A.href = '#0';
+						$Div.appendChild($A);
+					}
+					for (var i = nowNum - 4; i <= nowNum + 4; i++){
+						$A = document.createElement('a');
+						if (i == nowNum){
+							$A.innerHTML = i;
+						}else{
+							$A.innerHTML = '[' + i + ']';
+						}
+						$A.href = '#' + i;
+						$Div.appendChild($A);
+					}
+					if (nowNum <= allNum - 5){
+						$A = document.createElement('a');
+						$A.innerHTML = '尾页';
+						$A.href = '#' + (allNum + 1);
+						$Div.appendChild($A);		
+					}
+					if (nowNum != allNum){
+						$A = document.createElement('a');
+						$A.innerHTML = '下一页';
+						$A.href = '#' + (allNum + 2);
+						$Div.appendChild($A);	
+						}
+					}
+					//首页部分
+					else if(nowNum <= 4){
+						$Div.innerHTML = '';
+						if (nowNum !=1){
+							var $A = document.createElement('a');
+							$A.innerHTML = '上一页';
+							$A.href = '#' + (allNum + 3);
+							$Div.appendChild($A);
+						}
+						for (var i = 1; i <= 9; i++){
+							var $A = document.createElement('a');
+							$A.href = '#' + i;
+							if (i == nowNum){
+								$A.innerHTML = i;
+							}else {
+								$A.innerHTML = '[' + i + ']'; 
+							}
+							$Div.appendChild($A);
+						}
+						var $A = document.createElement('a');
+						$A.innerHTML = '尾页';
+						$A.href = '#' + (allNum + 1);
+						$Div.appendChild($A);
+						$A = document.createElement('a');
+						$A.innerHTML = '下一页';
+						$A.href = '#' + (allNum + 2);
+						$Div.appendChild($A);
+					}
+					//尾页部分
+					else{
+						$Div.innerHTML = '';
+						var $A = document.createElement('a');
+						$A.innerHTML = '上一页';
+						$A.href = '#' + (allNum + 3);
+						$Div.appendChild($A);
+						if (nowNum >=12){
+							$A = document.createElement('a');
+							$A.innerHTML = '首页';
+							$A.href = '#0';
+							$Div.appendChild($A);
+						}
+						for (var i = nowNum - 4; i <= allNum; i++){
+							$A = document.createElement('a');
+							if (nowNum == i){
+								$A.innerHTML = i;
+							}else{
+								$A.innerHTML = '[' + i + ']';
+							}
+							$A.href = '#' + i;
+							$Div.appendChild($A);
+						}
+						if (nowNum != allNum){
+							$A = document.createElement('a');
+							$A.innerHTML = '下一页';
+							$A.href = '#' + (allNum + 2);
+							$Div.appendChild($A);	
+						}
+					}
+					callBack(nowNum, allNum);
+				}
+				addEvent($Div, 'click', function(e){
+					var e = e || window.event;
+					var tar = event.srcElement || event.target;
+					if (tar.className != className){
+						var reg = /\d+$/;
+						var num = parseInt(reg.exec(tar.href));
+						if (num == allNum + 2){
+							nowNum ++;
+						}else if (num == allNum + 1){
+							nowNum = allNum;
+						}else if (num == 0){
+							nowNum = 1;
+						}else if (num == allNum + 3){
+							nowNum --;
+						}else{
+							nowNum = num;
+						}
+						json.nowNum = nowNum;
+						json.allNum = allNum;
+						json.className = className;
+						json.callBack = callBack;
+						Page(json);
+						
+					}
+				})
+	}
+
+	</script>
+</body>
+</html>
