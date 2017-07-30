@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>加速运动</title>
+	<style type="text/css">
+
+	div{
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		width: 100px;
+		height: 100px;
+		background-color: red;
+		border-radius: 50%;
+	}
+
+	</style>
+</head>
+<body>
+<div id='div1'></div>
+<script type="text/javascript">
+	var $Div = document.getElementById('div1');
+		timer = null,
+		lastX = 0,
+		lastY = 0,
+		iSpeedX = 0,
+		iSpeedY = 0;
+		$Div.onmousedown = function(e){
+			clearInterval(timer);
+			var event = event || e,
+				disX = event.clientX - this.offsetLeft,
+				disY = event.clientY - this.offsetTop;
+			document.onmousemove = function(e){
+				var event = event || e,
+					newL = event.clientX - disX,
+					newT = event.clientY - disY;
+					iSpeedX = newL - lastX;
+					iSpeedY = newT - lastY;
+					lastX = newL;
+					lastY = newT;
+					$Div.style.left = newL + 'px';
+					$Div.style.top = newT + 'px';
+			}
+			document.onmouseup = function(){
+				document.onmousemove = null;
+				document.onmouseup = null;
+				startMove();
+			}
+		}
+
+		function startMove(){
+			clearInterval(timer);
+				g = 3;
+			timer = setInterval(function(){
+				iSpeedY += g;
+				var l = $Div.offsetLeft + iSpeedX;
+				var t = $Div.offsetTop + iSpeedY;
+				if(t > document.documentElement.clientHeight - $Div.offsetHeight){
+					iSpeedY *= -1;
+					iSpeedY *= 0.8;
+					iSpeedX *= 0.8;
+					t = document.documentElement.clientHeight - $Div.offsetHeight
+				}else if(t <= 0){
+					iSpeedY *= -1;
+					iSpeedX *= 0.8;
+					t = 0;
+				}
+				if(l > document.documentElement.clientWidth - $Div.offsetWidth){
+					iSpeedX *= -1;
+					iSpeedX *= 0.8;
+					l = document.documentElement.clientWidth - $Div.offsetWidth
+				}else if(l <= 0){
+					iSpeedX *= -1;
+					iSpeedX *= 0.8;
+					l = 0;
+				}
+				if(Math.abs(iSpeedX) < 1){
+					iSpeedX = 0;
+				}
+				if(Math.abs(iSpeedY) < 1){
+					iSpeedY = 0;
+				}
+				if(iSpeedX === 0 && iSpeedY ===0 && $Div.offsetTop === document.documentElement.clientHeight - $Div.offsetHeight){
+					clearInterval(timer);
+				}
+				$Div.style.left = l + 'px';
+				$Div.style.top = t + 'px';
+			},30)
+		}
+</script>
+</body>
+</html>

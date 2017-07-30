@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>长途汽车票务查询系统</title>
+<link rel="stylesheet" href="css/bus.css">
+</head>
+<body>
+<div class="wrap">
+<div class="head"><h1>长途汽车票务查询系统</h1></div>
+
+<div class="nav">
+<ul>
+	<li><a href="index.html">首页</a></li>
+	<li><a href="bus.html">购票</a></li>
+	<li><a href="ticket.html">查询</a></li>
+	<li><a href="admin.html">管理</a></li>
+</ul>
+</div>
+
+<form class="query-form">
+<label>出发地：</label><input type="text" name="from" class="required" value="青岛"> <label>目的地：</label><input type="text" name="to" class="required" value="莱阳"> <label>乘车日期:</label><select name="date"></select> <input type="button" id="bus_query" value=" 查询 ">
+</form>
+
+<table id="tbl" class="tbl hide">
+<thead>
+	<tr><th>车次</th><th>始发站</th><th>终到站</th><th>日期</th><th>发车时间</th><th>座位数</th><th>票价</th><th>余票</th><th>购票</th></tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+
+</div>
+
+<div class="popup popp">
+<div class="popup-inner">
+<h2>购票</h2>
+您选择的车次是：
+<table id="tbl-buy" class="tbl">
+<thead>
+<tr><th>车次</th><th>始发站</th><th>终到站</th><th>日期</th><th>发车时间</th><th>票价</th></tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+请输入您的购票信息：
+<form class="form buyform">
+<div><label>姓名：</label><input type="text" name="username" class="required"></div>
+<div><label>身份证号：</label><input type="text" name="idcard" class="required"></div>
+<div style="text-align:right"><input type="button" value="确定" id="btn_ok" rel="0"> <input type="button" value="取消" id="btn_cancel"></div>
+</form>
+
+</div>
+</div>
+
+<div class="pop-backdrop popp"></div>
+
+<script src="js/jquery.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/bus.js"></script>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset = "UTF-8" />
+	<title>微博注册</title>
+	<style type="text/css">
+		*{
+			padding:0;
+			margin: 0;
+			font-weight: normal;
+			font-size: 14px;
+			font-family: "微软雅黑";
+			font-style: normal;
+			list-style-type: none;
+			text-decoration: none;
+		}
+		body{
+			background: url(images/body_bg.png);
+		}
+		a{
+			color: #0a8cd2;
+		}
+		a:hover{
+			text-decoration: underline;
+		}
+		.center{
+			width: 896px;
+			margin: 0 auto;
+		}
+		.header{
+			height: 186px;
+			padding-top: 47px;
+			background: url(images/bg_reg_wave.png);
+		}
+		.header .logo{
+			width: 200px;
+			height: 72px;
+			margin: 0 auto;
+			background: url(images/logo_big.png);
+		}
+		.main{
+			background: #fff;
+			border-radius: 5px;
+			margin-top: -46px;
+			overflow: hidden;
+		}
+		.main .login{
+			float: left;
+			width: 630px;
+			overflow: hidden;
+		}
+		.main .login .choose{
+			margin:30px 0 0 40px;
+		}
+		.main .login .choose h3{
+			display: inline-block;
+			font-size: 22px;
+			font-weight: 500;
+		}
+		.main .login .choose span{
+			margin: 0 50px;
+			color: #b299b2;
+		}
+		.main .login .messIn{
+			padding-top: 50px;
+			border-right: 1px solid #dedede;
+			overflow: hidden;
+			margin-bottom: 50px;
+		}
+		.main .login .login-input{
+			margin-left: 58px;
+			width: 300px;
+			float: left;
+		}
+		.main .login .login-input div{
+			text-align: right;
+		}
+		.main .login .login-input div i {
+			color: #f00;
+			margin-right: 4px;
+			font-family: "SimSun";
+		}
+		.main .login .login-input div input{
+			display: inline;
+			width: 190px;
+	        height: 30px;
+	        line-height: 30px;
+	        border-radius: 3px;
+	        padding-left: 10px;
+	        border: 1px solid #ccc;
+	        color: #808080;
+	        margin-bottom: 15px;
+		}
+		.main .login .login-input b{
+			margin: 0 115px 15px 0;
+			font-size: 12px;
+			display:block;
+		}
+		.main .login .login-input b a {
+			font-size:12px;
+		}
+		.main .login .login-input .chooEmail{
+			/*width: 200px;*/
+			position: absolute;
+			background: #fff;
+			text-align: left;
+			margin-left: 97px;
+			margin-top: -15px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+		.main .login .login-input .chooEmail p{
+			padding:0 10px;
+			height: 30px;
+			line-height: 30px;
+			font-size: 12px;
+		}
+		.main .login .im-login{
+			width: 471px;
+			float: right;
+			text-align: left;
+			margin-top: 15px;
+		}
+		.main .login .im-login input{
+			width: 200px;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 3px;
+			border: 1px solid #ffa00a;
+			background: #ffa00a;
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+			font-style: normal;
+		}
+		.main .login .im-login input:hover{
+			background: #ffab26;
+		}
+		.main .login .im-login a{
+			display: block;
+			height: 25px;
+			line-height: 25px;
+		}
+		.main .help{
+			float: right;
+			width: 225px;
+			margin-top: 99px;
+		}
+		.main .help .hasId {
+			width: 190px;
+			height: 40px;
+			line-height: 40px;
+			border-bottom: 1px dashed #ccc;
+		}
+		.main .help .loginHelp{
+			margin-top: 20px;
+		}
+		.main .help .loginHelp p {
+			height: 30px;
+			line-height: 30px;
+		}
+		.main .help .loginHelp ul li {
+			overflow: hidden;
+		}
+		.main .help .loginHelp ul li i{
+			display: inline-block;
+			width: 15px;
+			height: 18px;
+			line-height: 15px;
+			background: url(images/bg_listNum.png);
+			color: #fff;
+			text-align: center;
+			margin: 4px 10px 0 0;
+			float: left;
+		}
+		.main .help .loginHelp ul li a{
+			width: 175px;
+			line-height: 25px;
+			float: left;
+			font-size: 12px;
+		}
+		.main .help .help-more{
+			margin: 16px 0 0 25px;
+		}
+		.main .help .help-more a{
+			font-size: 12px;
+		}
+		.footer{
+			overflow: hidden;
+			color: #6e9ab8;
+			margin-top: 10px;
+			padding-bottom: 10px;
+		}
+		.footer .left{
+			float: left;
+			margin-top:3px;
+			width: 550px;
+		}
+		.footer .left i{
+			background: url(images/reg_ico.png) no-repeat;
+			padding-left: 25px;
+			margin-right: 10px;
+			font-size: 12px;
+		}
+		.footer .left a{
+			color: #6e9ab8;
+			font-size: 12px;
+		}
+		.footer .right{
+			float: right;
+			font-size: 12px;
+		}
+		.footer .right i{
+			font-size: 12px;
+		}
+		.footer .right select{
+			font-size: 12px;
+		}
+		.footer .right select option{
+			font-size: 12px;
+		}
+		.grey{
+			background: #ccc;
+		}
+		.white{
+			background: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="header center">
+		<div class="logo"></div>
+	</div>
+	<div class="main center">
+		<div class="login">
+			<div class="choose">
+				<h3>个人注册</h3><span>|</span><h3>官方注册</h3>
+			</div>
+			<div class="messIn">
+				<div class="login-input">
+					<div class="emailIn">
+						<i>*</i>邮箱：
+						<input type="text" value="请输入您常用邮箱" id="emailtxt"/>
+						<div class="chooEmail" id="chooEmail"></div>
+						<b>或使用<a>手机注册</a></b>
+					</div>
+					<div class="password">
+						<i>*</i>设置密码：
+						<input type = "password" />
+					</div>
+					<div class="ident">
+						<i>*</i>验证码：
+						<input type = "text" />
+					</div>
+				</div>
+				<div class="im-login">
+					<input type = "button" value = "立即注册" />
+					<a href="">微博服务使用协议</a>
+					<a href="">微博个人信息保护政策</a>
+					<a href="">全国人大常委会关于加强网络信息保护的决定</a>
+				</div>
+			</div>
+		</div>
+		<div class="help">
+			<div class="hasId">
+				已有帐号，<a>直接登录»</a>
+			</div>
+			<div class="loginHelp">
+				<p>微博注册帮助</p>
+				<ul>
+					<li>
+						<i>1</i>
+						<a href="">微博注册操作指南</a>
+					</li>
+					<li>
+						<i>2</i>
+						<a href="">手机注册时提示手机号码已被绑定怎么办?</a>
+					</li>
+					<li>
+						<i>3</i>
+						<a href="">注册微博时昵称显示“已经被注册”如何处理?</a>
+					</li>
+					<li>
+						<i>4</i>
+						<a href="">注册时提示"你所使用的IP地址异常",该怎么办?</a>
+					</li>
+				</ul>
+				<div class="help-more">
+					<a href="">更多帮助»</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer center">
+		<div class="left">
+			<i>北京微梦创科网络技术有限公司</i>
+			<a href="">京网文[2011]0398-130号</a>
+			<a href="">京ICP备12002058号</a>
+		</div>
+		<div class="right">
+			<i>Copyright © 2009-2016 WEIBO</i>
+			<select>
+				<option>中文（简体）</option>
+				<option>中文（台湾）</option>
+				<option>中文（香港）</option>
+				<option>English</option>
+			</select>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var $emailtxt = document.getElementById("emailtxt");
+		var $chooEmail = document.getElementById("chooEmail");
+		var email = ['@126.com', '@163.com', '@sina.com', '@qq.com', '@sina.cn', '@vip.sina.com', '@3g.sina.cn'];
+
+		$chooEmail.style.display = "none";
+		$emailtxt.onfocus = function(){
+			if(this.value == "请输入您常用邮箱"){
+				this.value = "";
+			}
+		}
+		$emailtxt.onblur = function(){
+			if(this.value == ""){
+				this.value = "请输入您常用邮箱";
+			}
+		}
+
+		$emailtxt.oninput = function(){
+			if($emailtxt.value != ''){
+				$chooEmail.style.display = "block";
+			}else{
+				$chooEmail.style.display = "none";
+			}
+
+			var reg = /\w+/;
+			var reg1 = /@/;
+			//如果没有@符号
+			if(!reg1.exec($emailtxt.value)){
+				$chooEmail.innerHTML = '';
+				for(var i = 0; i < email.length; i ++){
+					var $P = document.createElement("p");
+					if(i === 0){
+						$P.innerText = '请选择邮箱类型';
+					}else{
+						$P.innerText = $emailtxt.value + email[i - 1];
+					}
+					$chooEmail.appendChild($P);
+				}
+			}else{//如果有@
+				$chooEmail.innerHTML = '';
+				var aite = $emailtxt.value.slice(reg1.exec($emailtxt.value).index);
+				var $P = document.createElement("p");
+				$P.innerText = $emailtxt.value;
+				$chooEmail.appendChild($P);
+				for(var i = 0; i < email.length; i ++){
+					if(email[i].indexOf(aite) != -1){
+						var ishas = false;
+						for(var j = 0; j < $chooEmail.children.length; j ++){
+							if($chooEmail.children[j].innerText == reg.exec($emailtxt.value) + email[i]){
+								ishas = true;
+								break;
+							}
+						}
+						if(!ishas){
+							var $P = document.createElement("p");
+							$P.innerHTML = reg.exec($emailtxt.value) + email[i];
+							$chooEmail.appendChild($P);
+						}
+					}
+				}
+			}
+
+			//鼠标滑过，第一个p的背景颜色不改变
+			for(var i = 1; i < $chooEmail.children.length; i ++){
+				$chooEmail.children[i].onmouseenter = function(){
+					this.className = "grey";
+				}
+				$chooEmail.children[i].onmouseleave = function(){
+					this.className = "white";
+				}
+			}
+		}
+
+		document.onclick = function () {
+			$chooEmail.style.display = "none";
+		}
+
+		$chooEmail.onclick = function(event){
+			var event = window.event || e;
+			var target = event.target || event.srcElement;
+			if(target.innerText == "请选择邮箱类型"){
+				$emailtxt.value = $emailtxt.value + "";
+			}else{
+				$emailtxt.value = target.innerText;				
+			}
+		}
+		//键盘：下、上、回车
+		window.onkeydown = function(event){
+			var event = window.event || e;
+			if(document.getElementsByClassName("grey")[0]){
+				var $chooEmailP = document.getElementsByClassName("grey")[0];
+			}else{
+				if($chooEmail.innerHTML != 0){
+					var $chooEmailP = $chooEmail.children[0];
+					$chooEmail.children[0].className = "grey";
+				}
+			}
+			if($chooEmail.style.display == "block"){
+				if(event.which == 38){
+					if($chooEmailP.previousElementSibling){
+						if($chooEmailP.previousElementSibling == $chooEmail.children[0]){
+							$chooEmail.children[$chooEmail.children.length - 1].className = "grey";
+							$chooEmailP.className = "";
+						}else{
+							$chooEmailP.previousElementSibling.className = "grey";
+							$chooEmailP.className = "";
+						}
+					}
+				}else if(event.which == 40){
+					if($chooEmailP.nextElementSibling){
+						if($chooEmailP.nextElementSibling == $chooEmail.children[$chooEmail.children.length]){
+							$chooEmail.children[1].className = "grey";
+							$chooEmailP.className = "";
+						}else{
+							$chooEmailP.nextElementSibling.className ="grey";
+							$chooEmailP.className = "";
+						}
+					}
+					else if($chooEmail.children[1]){
+						$chooEmail.children[1].className = "grey";
+						$chooEmailP.className = "";
+					}
+				}else if(event.which == 13){
+					$emailtxt.value = $chooEmailP.innerText;
+					$chooEmail.style.display = "none";
+				}
+			}
+		}
+	</script>
+</body>
+</html>

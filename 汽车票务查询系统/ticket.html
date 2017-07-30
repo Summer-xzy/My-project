@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>长途汽车票务查询系统</title>
+<link rel="stylesheet" href="css/bus.css">
+</head>
+<body>
+<div class="wrap">
+<div class="head"><h1>长途汽车票务查询系统</h1></div>
+<div class="nav">
+<ul>
+	<li><a href="index.html">首页</a></li>
+	<li><a href="bus.html">购票</a></li>
+	<li><a href="ticket.html">查询</a></li>
+	<li><a href="admin.html">管理</a></li>
+</ul>
+</div>
+
+<form class="query-form">
+<label>姓名：</label><input type="text" name="username" class="required"> 
+<label>身份证：</label><input type="text" name="idcard" class="required"> 
+<input type="button" id="ticket_query" value=" 查询 ">
+</form>
+
+
+<table id="ticket_list" class="tbl hide">
+<thead>
+	<tr><th>车次</th><th>始发站</th><th>终到站</th><th>日期</th><th>发车时间</th><th>票价</th><th>购票人</th><th>身份证号</th><th>操作</th></tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/ticket.js"></script>

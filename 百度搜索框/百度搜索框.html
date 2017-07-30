@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度搜索框</title>
+	<style type="text/css">
+	*{
+		padding: 0;
+		text-decoration: none;
+	}
+		#input{
+			margin-top: 6px;
+		    border: 1px solid #b6b6b6;
+		    background: #fff;
+		    display: inline-block;
+		    vertical-align: top;
+		    width: 539px;
+		    margin-right: -7px;
+		    border-right-width: 0;
+		    overflow: hidden;    
+		    height: 34px;
+		    font-size: 16px;
+		}
+		#menu{
+			display: none;
+		    position: absolute;
+		   	margin-top: -1px;
+			margin-left: 110px;
+		    width: 538px;
+		    border: 1px solid #ccc;
+		    overflow: hidden;
+		}
+		li a{
+			width: 522px;
+		    color: #000;
+		    font: 14px arial;
+		    line-height: 22px;
+		    padding: 0 8px;
+		    position: relative;
+		    cursor: default;
+		}
+		.search{
+			position: absolute;
+			margin-top: 6px;
+			margin-left: 7px;
+			border: 0;
+    		padding: 0;
+			width: 100px;
+		    height: 36px;
+		    color: white;
+		    font-size: 15px;
+		    letter-spacing: 1px;
+		    background: #3385ff;
+		    border-bottom: 1px solid #2d78f4;
+		    cursor: pointer;
+		}
+		.soutu-btn{
+			z-index: 1;
+		    position: absolute;
+		    right: 11px;
+		    top: 50%;
+		    margin-top: -8px;
+		    height: 16px;
+		    width: 18px;
+		    background: #fff;
+		    cursor: pointer;
+		    background: url(https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/soutu/img/camera_new_679c15cc.png) no-repeat;
+		}
+		#ca{
+			position: absolute;
+			margin-top: 15px;
+			margin-left: 512px;
+		}
+	</style>
+</head>
+<body>
+
+	<img src="search.jpg">
+	<img id="ca" src="camera.jpg">
+	<input type="text" id="input">
+	<span class="soutu-btn" style="display: block;"></span>
+	<input type="submit" value="百度一下" class="search">
+	<ul id="menu">
+		<li>
+			<a href=""></a>
+		</li>
+	</ul>
+</body>
+<script>
+function duyi(data){
+		var Menu = document.getElementById("menu");
+		var html = '';
+		if (data.s.length) {
+			Menu.style.display = "block";
+			for(var i = 0;i < data.s.length; i++){
+				html += '<li><a target="_blank" href="http://www.baidu.com/s?wd='+data.s[i]+'">'+ data.s[i] +'</a></li>';
+			}
+			Menu.innerHTML = html;
+		}else{
+			Menu.style.display = 'none';
+		}
+	}
+window.onload = function(){
+	var Input = document.getElementById('input');
+	var Menu = document.getElementById('menu');
+	Input.onkeyup = function(){
+		if (this.value != "") {
+			var oScript = document.createElement("script");
+			oScript.src ='http://suggestion.baidu.com/su?wd='+this.value+'&cb=duyi';
+			document.body.appendChild(oScript);
+		}else{
+			Menu.style.display = 'none';
+		}
+	}
+	Input.onblur = function(){
+		Menu.style.display = 'none';
+	}
+}
+</script>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>贪吃蛇最终版</title>
+</head>
+	<style type="text/css">
+
+		#wrapper{
+			width: 1000px;
+			height: 550px;
+			border:1px solid black;
+			margin: 0 auto;
+		}
+		#grass{
+			width: 1000px;
+			height: 500px;
+			background: green;
+			position: relative;
+		}
+		#background{
+			width: 1000px;
+			height: 500px;
+			background: green;
+			position: relative;
+		}
+		#button{
+			float: right;
+			height: 50px;
+			line-height: 50px;
+		}
+		button{
+			width: 60px;
+			height: 45px;
+		}
+
+		.snakeBody{
+			width: 20px;
+			height: 20px;
+			background: red;
+			position: absolute;
+			top: 0;
+		}
+		.snake-block{
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			background-color: red;
+		}
+		.food-block{
+			width: 20px;
+			height: 20px;
+			background: yellow;
+			position: absolute;
+		}
+
+	</style>
+<body>
+	<div id="wrapper">
+		<div id="grass"><img id="background" src="贪吃蛇背景.jpg"></div>
+		<div id="gameControl">
+			<div id="button">
+					<button id="start">开始</button>
+					<button id="pause">暂停</button>
+					<button id="through">穿墙</button>
+					<button id="simple">初级</button>
+					<button id="middle">中级</button>
+					<button id="violent">暴走</button>
+					<button id="supergod">超神</button>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+//创建蛇
+		var snakeBody = new Array();//蛇身数组
+		var ograss = document.getElementById("grass");
+		for(var i = 3;i>0;i--){
+			var oDiv = document.createElement("div");
+				oDiv.className = "snakeBody";
+				oDiv.style.left= i*20 + "px";
+				ograss.appendChild(oDiv);
+				snakeBody.push(oDiv);//向蛇身数组添加蛇身
+		}
+//蛇开始移动
+		var direction = 'right', //首先开始游戏后，蛇都是向右移动的
+			oStart = document.getElementById('start'),//设置开始
+			oSimple = document.getElementById('simple'),//初级
+			oMiddle = document.getElementById('middle'),//中级
+			oThrough = document.getElementById('through'),//穿墙
+			oViolent = document.getElementById('violent'),  //暴走
+			oSuperGod = document.getElementById('supergod'), //超神
+			timer = null;
+		oStart.onclick = function(){  //给开始加一个事件
+			clearInterval(timer);
+			timer = setInterval(function(){
+				move(direction);
+			},300);
+		}		
+		oSimple.onclick = function(){  //给开始加一个事件
+			clearInterval(timer);
+			timer = setInterval(function(){
+				move(direction);
+			},200);
+		}
+		oThrough.onclick = function(){  //穿墙
+			clearInterval(timer);
+			timer = setInterval(function(){
+				tmove(direction);
+			},300);
+		}
+		oMiddle.onclick = function(){  //中级
+			clearInterval(timer);
+			timer = setInterval(function(){
+				move(direction);
+			},100);
+		}
+		oViolent.onclick = function(){  //暴走
+			clearInterval(timer);
+			timer = setInterval(function(){
+				move(direction);
+			},30);
+		}
+		oSuperGod.onclick = function(){  //超神
+			clearInterval(timer);
+			timer = setInterval(function(){
+				move(direction);
+			},20);
+		}
+//蛇移动方法 撞墙版
+		function move(dir){
+			var snakeHead = snakeBody[0]; //获取蛇头，让蛇头移动
+			for(var i=snakeBody.length-1; i>0; i--){  //让蛇尾跟随蛇头
+				snakeBody[i].style.left = snakeBody[i-1].offsetLeft + "px";
+				snakeBody[i].style.top = snakeBody[i-1].offsetTop + "px";    //  父级是grass
+			}
+			switch(dir){
+				case "left":
+					snakeHead.style.left = snakeHead.offsetLeft - 20 + "px";
+					break;
+				case "up":
+					snakeHead.style.top = snakeHead.offsetTop - 20 + "px";
+					break;
+				case "right":
+					snakeHead.style.left = snakeHead.offsetLeft + 20 + "px";
+					break;
+				case "down":
+					snakeHead.style.top = snakeHead.offsetTop + 20 + "px";
+					break;
+			}
+			//蛇撞墙/身体
+			if(snakeHead.offsetLeft == -20 || snakeHead.offsetTop == -20 || snakeHead.offsetLeft == 1000 || snakeHead.offsetTop == 500)
+			{
+				alert("GG");
+				clearInterval(timer);
+				location.reload();
+			}
+			//蛇吃身体
+			for(var i = 1; i < snakeBody.length; i++){
+				if(snakeHead.offsetLeft == snakeBody[i].offsetLeft && snakeHead.offsetTop == snakeBody[i].offsetTop){
+					alert('你撞自己了');
+					clearInterval(timer);
+					location.reload();
+				}
+			}
+			//蛇吃食物
+		if(snakeHead.offsetLeft == food.offsetLeft && snakeHead.offsetTop == food.offsetTop){
+			food.className = "snake-block";
+			if("direction" == "right"){
+				food.style.left = snakeBody[snakeBody.length - 1].offsetLeft - 20 + "px";
+			}else	if("direction" == "down"){
+				food.style.top = snakeBody[snakeBody.length - 1].offsetTop - 20 + "px";
+			}else	if("direction" == "left"){
+				food.style.left = snakeBody[snakeBody.length - 1].offsetLeft + 20 + "px";
+			}else	if("direction" == "up"){
+				food.style.top = snakeBody[snakeBody.length - 1].offsetTop + 20 + "px";
+			}
+			snakeBody.push(food);//蛇吃到食物
+			food = createFood();//重新生成食物
+		}
+		document.onkeydown = function(e){
+			e = e || window.event;
+			var keyCode = e.which || e.keyCode;
+			if(keyCode == 37 ){//左
+				if(direction != 'right'){
+					direction = 'left';
+					move(direction);
+				}
+			}else if(keyCode == 38){//上
+				if(direction != 'down'){
+					direction = 'up';
+					move(direction);
+				}
+			}else if(keyCode == 39){//右
+				if(direction != 'left'){
+					direction = 'right';
+					move(direction);
+				}
+			}else if(keyCode == 40){//下
+				if(direction != 'up'){
+					direction = 'down';
+					move(direction);
+				}
+		}
+	};
+
+	}
+	//穿墙版
+	function tmove(dir){
+			var snakeHead = snakeBody[0]; //获取蛇头，让蛇头移动
+			for(var i=snakeBody.length-1; i>0; i--){  //让蛇尾跟随蛇头
+				snakeBody[i].style.left = snakeBody[i-1].offsetLeft + "px";
+				snakeBody[i].style.top = snakeBody[i-1].offsetTop + "px";    //  父级是grass
+			}
+			switch(dir){
+				case "left":
+					snakeHead.style.left = snakeHead.offsetLeft - 20 + "px";
+					break;
+				case "up":
+					snakeHead.style.top = snakeHead.offsetTop - 20 + "px";
+					break;
+				case "right":
+					snakeHead.style.left = snakeHead.offsetLeft + 20 + "px";
+					break;
+				case "down":
+					snakeHead.style.top = snakeHead.offsetTop + 20 + "px";
+					break;
+			}
+			//蛇穿墙
+			if(snakeHead.offsetLeft == 1000){
+				snakeHead.style.left = 0;
+			}else if (snakeHead.offsetTop == 500) {
+				snakeHead.style.top = 0;
+			}else if (snakeHead.offsetLeft < 0) {
+				snakeHead.style.left = 980 + "px";
+			}else if(snakeHead.offsetTop < 0){
+				snakeHead.style.top = 480 + "px";
+			}
+			//蛇吃身体
+			for(var i = 1; i < snakeBody.length; i++){
+				if(snakeHead.offsetLeft == snakeBody[i].offsetLeft && snakeHead.offsetTop == snakeBody[i].offsetTop){
+					alert('你撞自己了');
+					clearInterval(timer);
+					location.reload();
+				}
+			}
+			//蛇吃食物
+		if(snakeHead.offsetLeft == food.offsetLeft && snakeHead.offsetTop == food.offsetTop){
+			food.className = "snake-block";
+			if("direction" == "right"){
+				food.style.left = snakeBody[snakeBody.length - 1].offsetLeft - 20 + "px";
+			}else	if("direction" == "down"){
+				food.style.top = snakeBody[snakeBody.length - 1].offsetTop - 20 + "px";
+			}else	if("direction" == "left"){
+				food.style.left = snakeBody[snakeBody.length - 1].offsetLeft + 20 + "px";
+			}else	if("direction" == "up"){
+				food.style.top = snakeBody[snakeBody.length - 1].offsetTop + 20 + "px";
+			}
+			snakeBody.push(food);//蛇吃到食物
+			food = createFood();//重新生成食物
+		}
+		document.onkeydown = function(e){
+			e = e || window.event;
+			var keyCode = e.which || e.keyCode;
+			if(keyCode == 37 ){//左
+				if(direction != 'right'){
+					direction = 'left';
+					tmove(direction);
+				}
+			}else if(keyCode == 38){//上
+				if(direction != 'down'){
+					direction = 'up';
+					tmove(direction);
+				}
+			}else if(keyCode == 39){//右
+				if(direction != 'left'){
+					direction = 'right';
+					tmove(direction);
+				}
+			}else if(keyCode == 40){//下
+				if(direction != 'up'){
+					direction = 'down';
+					tmove(direction);
+				}
+		}
+	};
+
+	}
+
+
+//蛇暂停移动
+		var oPause = document.getElementById('pause');
+		oPause.onclick = function(){
+			clearInterval(timer);
+		}
+//生成食物
+	var food = createFood();
+	function createFood(){
+		var oFood = document.createElement("div");
+		oFood.className = "food-block";
+		while(!bFound){
+			var bFound = true;//一个标识，表示是否找到食物合适的位置
+			iLeft = Math.floor(Math.random() * 1000);
+			iLeft = iLeft - iLeft%20 ;//随机产生食物的位置
+			iTop = Math.floor(Math.random() * 500);
+			iTop = iTop - iTop%20;
+			for(var i = 0;i < snakeBody.length; i++){
+				if(snakeBody[i].offsetLeft == iLeft && snakeBody[i].offsetTop == iTop){
+					bFound = false;//表示食物与蛇身重合
+					break;
+				}
+			}
+			oFood.style.left = iLeft + "px";
+			oFood.style.top = iTop + "px";
+			ograss.appendChild(oFood);  
+		}
+		return oFood;
+}
+</script>
+</body>
+</html>

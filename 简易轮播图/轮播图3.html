@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .wrapper {
+            position: relative;
+            width: 500px;
+            height: 200px; 
+            overflow: hidden;
+            margin:  100px auto 0 auto;
+            border: 1px solid black;           
+        }
+        ul {
+            position: absolute;
+            width: 2500px;
+            height: 200px;
+        } 
+        li {
+            width: 500px;
+            height: 200px;
+            float: left;
+        }
+        
+        img {
+            width: 500px;
+            height: 200px;
+        }
+        .slider-page {
+            position: absolute;
+            left: 50%;
+            bottom: 10px;
+            width: 60px;            
+            height: 10px;
+            margin-left: -30px;
+        }
+        .slider-page i {
+            float: left;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: gray;
+            margin-left: 5px;
+        }
+        .slider-page i.active {
+            background: black;
+        }
+    </style>
+</head>
+<body>    
+    <div class="wrapper">
+        <ul class="slider" id="slider">
+            <li><img src="cat1.jpg" alt=""></li>
+            <li><img src="cat2.jpg" alt=""></li>
+            <li><img src="cat3.jpg" alt=""></li>
+            <li><img src="cat4.jpg" alt=""></li>
+            <li><img src="cat1.jpg" alt=""></li>
+        </ul>
+        <ul class="slider-page" id="slider-page">
+            <i class="active"></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </ul>
+    </div>
+    <button id="left">left</button>
+    <button id="right">right</button>
+    <script>
+        var $Slider = document.getElementById('slider');
+        var $SliderPage = document.getElementById('slider-page');
+        var $LeftBtn = document.getElementById('left');
+        var $RightBtn = document.getElementById('right');        
+        var SliderTimer = null;
+        var Timer = null;
+        var flag = true;        
+        var sliderIndex = 0;        
+        $LeftBtn.onclick = function () {
+            autoMove(1);
+        }
+        $RightBtn.onclick = function () {
+            autoMove(-1);
+        }
+        function move (dom, direction) {
+            if (flag) {
+                flag = false;
+                clearInterval(Timer);
+                var iSpeed = 0,
+                    moveTrueDistance = 0,
+                    startStatus = parseInt($Slider.offsetLeft),
+                    moveNeedDistance = parseInt($Slider.children[0].offsetWidth),
+                    len = $Slider.children.length;                    
+                    moveNeedDistance = direction < 0 ? -moveNeedDistance : moveNeedDistance;
+                    iSpeed = direction < 0 ? -3 : 3;                                                                                
+                Timer = setInterval(function () {
+                    $Slider.style.left = $Slider.offsetLeft + iSpeed + 'px';  
+                    moveTrueDistance += iSpeed;
+                    if (Math.abs(moveTrueDistance) > Math.abs(moveNeedDistance)) {                 
+                        clearInterval(Timer);
+                        $Slider.style.left = startStatus + moveNeedDistance + 'px';
+                        SliderTimer = setTimeout(autoMove, 1500);  
+                        flag = true; 
+                        computeIndex(direction);              
+                    }   
+                    if (direction < 0 && parseInt($Slider.offsetLeft) === (len - 1) * moveNeedDistance) {
+                        $Slider.style.left = '0px';
+                    }                           
+                },1);                
+            }
+        }
+        
+        function autoMove (direction) {
+            clearTimeout(SliderTimer);
+            var moveNeedDistance = parseInt($Slider.children[0].offsetWidth),
+                len = $Slider.children.length;            
+            //向右轮播 -1;  向左轮播 1
+            if (!direction) {
+                direction = -1;
+            }else if (direction && direction === 1 && $Slider.offsetLeft === 0) {
+                $Slider.style.left = -(len - 1) * moveNeedDistance + 'px';
+            }            
+           move($Slider, direction); 
+        }
+        
+        function computeIndex (direction) {
+            var len = $SliderPage.children.length;
+            if (direction < 0) {
+                sliderIndex++;
+                if (sliderIndex === len) {
+                    sliderIndex = 0;
+                }
+            }else if (direction > 0) {
+                sliderIndex--;
+                if (sliderIndex < 0) {
+                    sliderIndex = len - 1;
+                }
+            }
+            changeIndex();
+        }
+        function changeIndex () {
+            var len = $SliderPage.children.length;
+            for (var i = 0; i < len; i++) {
+                $SliderPage.children[i].setAttribute('class', '');
+            }
+            $SliderPage.children[sliderIndex].setAttribute('class', 'active');
+        }
+        
+        
+        SliderTimer = setTimeout(autoMove,1500);
+    </script>
+</body>
+</html>
